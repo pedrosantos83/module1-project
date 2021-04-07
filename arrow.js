@@ -10,7 +10,7 @@ class Arrow {
     draw() {
         const image = new Image();
         image.src = '/images/arrow.png';
-        context.drawImage(image, this.x, this.y, this.width, this.height);
+        context.drawImage(image, this.x +35, this.y, this.width, this.height);
     }
 
 }

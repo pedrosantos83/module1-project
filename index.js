@@ -1,8 +1,12 @@
 let currentGame;
 let balloonsFrequency = 0;
 let animationId;
-const raceCanvas = document.getElementById('race');
-const context = raceCanvas.getContext('2d');
+let intro = new Audio("./audio/Intro.mp3");
+let balloon = new Audio("./audio/Balloon.mp3");
+let game = new Audio("./audio/game.mp3")
+
+const canvas = document.getElementById('game');
+const context = canvas.getContext('2d');
 document.getElementById('game-board').style.display = 'none';
 
 document.getElementById('start-button').onclick = () => {
@@ -10,17 +14,19 @@ document.getElementById('start-button').onclick = () => {
 }
 
 document.addEventListener('keydown', (e) => {
+    e.preventDefault()
     currentGame.arch.moveArch(e.keyCode);
-   // currentGame.arrow.moveArrow(e.keyCode);
-   if (e.keyCode === 65) {
-       currentGame.arrows.push(new Arrow(currentGame.arch.x));
-   }
+    // currentGame.arrow.moveArrow(e.keyCode);
+    if (e.keyCode === 32) {
+        currentGame.arrows.push(new Arrow(currentGame.arch.x));
+    }
 });
 
 
 
 function startGame() {
-    document.getElementById('game-board').style.display  = 'block';
+
+    document.getElementById('game-board').style.display = 'block';
     //Instantiate a new game
     currentGame = new Game();
     //Instantiate a new arch
@@ -36,20 +42,27 @@ function startGame() {
 }
 
 function detectCollision(balloon) {
-   return !((currentGame.arch.x > balloon.x + balloon.width) ||
-    (currentGame.arch.x + currentGame.arch.width < balloon.x) ||
-    (currentGame.arch.y > balloon.y + balloon.height))
+    return !((currentGame.arch.x > balloon.x + balloon.width) ||
+        (currentGame.arch.x + currentGame.arch.width < balloon.x) ||
+        (currentGame.arch.y > balloon.y + balloon.height))
+}
+function detectCollisionArrow(balloon, arrow) {
+
+    return !((arrow.x > balloon.x + balloon.width) ||
+        (arrow.x + arrow.width < balloon.x) ||
+        (arrow.y > balloon.y + balloon.height))
+
 }
 
 function updateCanvas() {
-    context.clearRect(0, 0, raceCanvas.width, raceCanvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
     currentGame.arch.draw();
     balloonsFrequency++;
     if (balloonsFrequency % 100 === 1) {
         const randomBalloonX = Math.floor(Math.random() * 895);
         const randomBalloonY = 0;
-      //  const randomBalloonWidth = 100; //Math.floor(Math.random() * 50) + 20;
-      //  const randomBalloonHeight = 100; //Math.floor(Math.random() * 50) + 20;
+        //  const randomBalloonWidth = 100; //Math.floor(Math.random() * 50) + 20;
+        //  const randomBalloonHeight = 100; //Math.floor(Math.random() * 50) + 20;
         const newBalloon = new Balloon(
             randomBalloonX,
             randomBalloonY
@@ -61,26 +74,49 @@ function updateCanvas() {
         balloon.y += 1;
         balloon.draw();
 
-        if (detectCollision(balloon)) {
-            balloon.blow = true;
-            /*
-            balloonsFrequency = 0;
-            currentGame.score = 0;
-            document.getElementById('score').innerHTML = 0;
-            currentGame.balloons = [];
-            document.getElementById('game-board').style.display = 'none';
-            */
+        currentGame.arrows.forEach((arrow, i) => {
+            if (detectCollisionArrow(balloon, arrow)) {
+                balloon.blowUp(index)
+                currentGame.arrows.splice(i, 1)
+                currentGame.score++;
+                document.getElementById('score').innerHTML = currentGame.score;
 
-        }
-/*
-        if (balloon.y > 700) {
+            }
+        })
+        if (detectCollision(balloon)) {
+            // balloon.blow = true;
+            balloon.blowUp(index)
+
             currentGame.score++;
             document.getElementById('score').innerHTML = currentGame.score;
-            currentGame.balloons.splice(index, 1);
+            /*
+              balloonsFrequency = 0;
+              
+              document.getElementById('score').innerHTML = 0;
+              currentGame.balloons = [];
+              document.getElementById('game-board').style.display = 'none';
+              */
+
         }
-        */
 
 
+        if (balloon.y > canvas.height) {
+            currentGame.score--;
+            document.getElementById('score').innerHTML = currentGame.score;
+            currentGame.balloons.splice(index, 1);
+            if (currentGame.score < -10) {
+                alert('BOOOM!');
+                balloonsFrequency = 0;
+                currentGame.score = 0;
+                document.getElementById('score').innerHTML = 0;
+                currentGame.balloons = [];
+                document.getElementById('game-board').style.display = 'none';
+
+
+
+            }
+
+        }
     });
 
     currentGame.arrows.forEach((arrow, index) => {
@@ -89,9 +125,11 @@ function updateCanvas() {
         if (arrow.y < 0) {
             currentGame.arrows.splice(index, 1);
         }
- 
     })
 
-   animationId = requestAnimationFrame(updateCanvas); 
+
+
+
+    animationId = requestAnimationFrame(updateCanvas);
     //Calling update canvas every 60fps
 }

@@ -1,10 +1,18 @@
 body {
     padding: 0;
     text-align: center;
+    color: turquoise;
+    background-color: black;
+  }
+
+  .intro{
+    height: 100px;
+    width: 300px;
+    
   }
   
   .game-intro {
-    float: left;
+    float: center;
     padding: 0% 10%;
   }
   
@@ -13,31 +21,25 @@ body {
     font-family: "Verdana"
   }
   
-  .logo-img {
-    width: 350px;
-  }
   
-  .arrows-img {
-    width: 150px;
-  }
-  
+ 
   body button {
-    font-size: 30px;
+    font-size: 19px;
     background-color: #870007;
     color: #fff;
     padding: 20px 40px;
     border: 0;
     box-shadow: 0;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   
   #game-board {
-      float: left;
+      float:inline-end;
       padding: 20px 0px;
   }
 
   canvas {
-    background-image: url('/images/florest.jpg');
+    background-image: url('/images/green-field.jpg');
     background-size: cover;
   }

@@ -6,6 +6,7 @@ class Balloon {
         this.height = 100;
         this.image = new Image();
         this.blow = false;
+        this.timetodisappear = 6;
     }
 
     draw() {
@@ -13,13 +14,17 @@ class Balloon {
             this.image.src = '/images/blue-balloon.png';
         } else {
             this.image.src = '/images/explosion.png';
+           
         }
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
-/*
-    blow() {
-        this.image.src = '/images/explosion.png';
-        context.drawImage(this.image, this.x, this.y, this.width, this.height);
+
+    blowUp(index) {
+        this.blow = true;
+
+            currentGame.balloons.splice(index, 1);
+
+       
     }
-    */
+    
 }
