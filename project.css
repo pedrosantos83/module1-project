@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
 body {
     padding: 0;
     text-align: center;
     color: turquoise;
     background-color: black;
+    font-family: 'MedievalSharp';
   }
 
   .intro{
-    height: 100px;
-    width: 300px;
-    
+    text-align: center;
+    font-size:40px;
   }
   
   .game-intro {
@@ -17,29 +19,44 @@ body {
   }
   
   .game-intro p {
+    flex-direction: column ;
     font-size: 18px;
-    font-family: "Verdana"
+    font-family: "Verdana";
   }
   
   
  
   body button {
     font-size: 19px;
-    background-color: #870007;
+    background-color: #2e9b88;
     color: #fff;
     padding: 20px 40px;
     border: 0;
     box-shadow: 0;
     border-radius: 5px;
     margin-bottom: 10px;
+    font-family: 'MedievalSharp';
   }
-  
+  #score-div{
+     color: #f60707;
+     font-size:30px ;
+     font:bold;
+
+  }
+
+  #score-p {
+    font-size: 1.5em;
+    position: absolute;
+    top: 30px;
+    left: 250px;
+  }
   #game-board {
       float:inline-end;
       padding: 20px 0px;
+     ;
   }
 
   canvas {
-    background-image: url('/images/green-field.jpg');
+  /*  background-image: url('/images/green-field.jpg'); */
     background-size: cover;
   }

@@ -1,7 +1,7 @@
 class Arrow {
     constructor(x) {
         this.x = x;
-        this.y = 620;
+        this.y = 570;
         this.width = 20;
         this.height = 50;
 

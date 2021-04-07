@@ -1,7 +1,7 @@
 class Arch {
     constructor() {
         this.x = 440;
-        this.y = 620;
+        this.y = 570;
         this.width = 80;
         this.height = 80;
 

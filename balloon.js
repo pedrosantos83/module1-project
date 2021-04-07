@@ -18,13 +18,5 @@ class Balloon {
         }
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
-
-    blowUp(index) {
-        this.blow = true;
-
-            currentGame.balloons.splice(index, 1);
-
-       
-    }
     
 }
