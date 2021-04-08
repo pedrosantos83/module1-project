@@ -1,10 +1,29 @@
 let currentGame;
 let balloonsFrequency = 0;
 let animationId;
-let song = new Audio("./audio/game.mp3");
+
 let burst = new Audio("./audio/Balloon.mp3");
 //let game = new Audio("./audio/game.mp3")
 let fire = new Audio("./audio/fire.mp3");
+let song = new Audio("./audio/game.mp3");
+
+if (typeof song.loop == 'boolean')
+{
+    song.loop = true;
+}
+else
+{
+    song.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
+}
+
+
+
+
+
+
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 document.getElementById('game-board').style.display = 'none';
